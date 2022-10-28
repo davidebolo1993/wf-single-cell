@@ -65,9 +65,22 @@ process output {
         saveAs: { filename -> "${sample_id}/bams/$filename" }
     publishDir "${params.out_dir}", mode: 'copy', pattern: "*umap*",
         saveAs: { filename -> "${sample_id}/umap/$filename" }
-    publishDir "${params.out_dir}", mode: 'copy', pattern: "*[!.png|!.bam|!.bai]",
+    publishDir "${params.out_dir}", mode: 'copy', pattern: "*[!.png|!.bam|!.bai|!.tsv]",
         saveAs: { filename -> "${sample_id}/$filename" }
-
+    publishDir "${params.out_dir}", mode: 'copy', pattern: "*kneeplot*",
+        saveAs: { filename -> "${sample_id}/$filename" }
+    publishDir "${params.out_dir}", mode: 'copy', pattern: "*config_stats*",
+        saveAs: { filename -> "${sample_id}/$filename" }
+    publishDir "${params.out_dir}", mode: 'copy', pattern: "*saturation_curves*",
+        saveAs: { filename -> "${sample_id}/$filename" }
+    publishDir "${params.out_dir}", mode: 'copy', pattern: "*_expression.*",
+        saveAs: { filename -> "${sample_id}/$filename" }
+    publishDir "${params.out_dir}", mode: 'copy', pattern: "*_processed.*",
+        saveAs: { filename -> "${sample_id}/$filename" }
+    publishDir "${params.out_dir}", mode: 'copy', pattern: "*whitelist.tsv",
+        saveAs: { filename -> "${sample_id}/$filename" }
+    publishDir "${params.out_dir}", mode: 'copy', pattern: "*.uncorrected_bc_counts.tsv",
+        saveAs: { filename -> "${sample_id}/$filename" }
     label "isoforms"
     input:
         tuple val(sample_id),

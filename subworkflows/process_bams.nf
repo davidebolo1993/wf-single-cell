@@ -265,8 +265,10 @@ process salmon {
     echo "procesing ${sample_id}, ${chr} with salmon"
 
     # If less than 5 transcripts can be built, return empty file 
-    if [ \$(wc -l <stringtie.gff) -lt 5 ]; then
+    if [ \$(wc -l <stringtie.gff) -lt 10 ]; then
+
         touch empty_read_query_tr_map.tsv
+    
     else
 
         # Get transcriptome sequence
@@ -279,10 +281,17 @@ process salmon {
         # Write mappings to stdout
         salmon quant -p ${task.cpus} -i salmon_index -l SF -r reads.fastq \
             -o salmon_out --minAssignedFrags 1 \
-            --writeMappings --validateMappings \
+            --writeMappings \
             2>/dev/null \
             | gawk 'BEGIN{OFS="\t";} /^[^@]/ {print \$1,\$3}' \
             > read_query_tr_map.tsv;
+
+        if [ ! -s read_query_tr_map.tsv ]; then
+
+            rm -rf read_query_tr_map.tsv salmon_index* salmon_out* transcriptome.fa
+            touch empty_read_query_tr_map.tsv
+
+        fi 
     fi
     """
 }
@@ -629,12 +638,10 @@ workflow process_bams {
              .join(construct_expression_matrix.out)
              .join(process_expression_matrix.out.matrix_processed_tsv)
              .join(process_expression_matrix.out.matrix_mito_tsv)
-             .join(generate_whitelist.out.whitelist
-                .map {it -> [it[0], it[1]] } )
+             .join(generate_whitelist.out.whitelist)
              .join(generate_whitelist.out.kneeplot)
             .join(tagged_bams)
-             .join(extract_barcodes.out.barcode_counts
-                .map {it -> [it[0], it[1]] } )
+             .join(extract_barcodes.out.barcode_counts)
              .join(umap_plot_genes.out.umap_plot_gene.groupTuple())
              .join(umap_reduce_expression_matrix.out.matrix_umap_tsv)
              .join(umap_plot_total_umis.out.gene_umap_plot_total)
