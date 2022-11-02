@@ -124,7 +124,7 @@ def filter_cells(df_gene, df_tr, args):
     df_gene["mito_total"] = df_gene.loc[:, mito_genes].sum(axis=1)
     df_gene["mito_pct"] = 100 * df_gene["mito_total"] / df_gene["total"]
     df_gene["mito_pct"].to_csv(
-        f"{args.output_prefix}gene_expression.mito.tsv", sep="\t")
+        f"{args.output_prefix}.gene_expression.mito.tsv", sep="\t")
     n_mito = df_gene[df_gene["mito_pct"] > args.max_mito].shape[0]
     logger.info(
         f"Dropping {n_mito} cells with > {args.max_mito}% mitochondrial reads")

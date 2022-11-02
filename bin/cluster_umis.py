@@ -496,12 +496,12 @@ def process_records(tag_file, args):
     df = df.drop(["bc", "umi_uncorr"], axis=1).set_index("read_id")
 
     # Dict of corrected UMI for each read ID
-    umis = df.to_dict()["umi_corr"]
+    umis = df.replace({np.nan:None}).to_dict()["umi_corr"]
 
     # Dict of gene names to add <chr>_<start>_<end> in place of NA
-    genes = df.to_dict()["gene"]
+    genes = df.replace({np.nan:None}).to_dict()["gene"]
 
-    transcripts = df.to_dict()["transcript"]
+    transcripts = df.replace({np.nan:None}).to_dict()["transcript"]
 
     # Add corrected UMIs to each chrom-specific BAM entry via the UB:Z tag
     read_tags = add_tags(args.chrom, umis, genes, transcripts, args)

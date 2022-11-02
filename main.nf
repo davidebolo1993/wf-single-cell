@@ -54,13 +54,13 @@ process makeReport {
 }
 
 
-
 // See https://github.com/nextflow-io/nextflow/issues/1636
 // This is the only way to publish files from a workflow whilst
 // decoupling the publish from the process steps.
 process output {
     label "singlecell"
     // publish inputs to output directory
+    // excluding uncorrected, because only one (last) was published actually
     publishDir "${params.out_dir}", mode: 'copy', pattern: "*[.bam|.bai]",
         saveAs: { filename -> "${sample_id}/bams/$filename" }
     publishDir "${params.out_dir}", mode: 'copy', pattern: "*umap*",
@@ -78,8 +78,6 @@ process output {
     publishDir "${params.out_dir}", mode: 'copy', pattern: "*_processed.*",
         saveAs: { filename -> "${sample_id}/$filename" }
     publishDir "${params.out_dir}", mode: 'copy', pattern: "*whitelist.tsv",
-        saveAs: { filename -> "${sample_id}/$filename" }
-    publishDir "${params.out_dir}", mode: 'copy', pattern: "*.uncorrected_bc_counts.tsv",
         saveAs: { filename -> "${sample_id}/$filename" }
     label "isoforms"
     input:

@@ -264,8 +264,8 @@ process salmon {
     """
     echo "procesing ${sample_id}, ${chr} with salmon"
 
-    # If less than 5 transcripts can be built, return empty file 
-    if [ \$(wc -l <stringtie.gff) -lt 10 ]; then
+    # If less than 5 transcripts can be built, return empty file - switched to 10 for testing now back to 5
+    if [ \$(wc -l <stringtie.gff) -lt 5 ]; then
 
         touch empty_read_query_tr_map.tsv
     
@@ -286,6 +286,8 @@ process salmon {
             | gawk 'BEGIN{OFS="\t";} /^[^@]/ {print \$1,\$3}' \
             > read_query_tr_map.tsv;
 
+        #dont' know if the following is useful - but avoids problems if read_query_tr_map is empty
+
         if [ ! -s read_query_tr_map.tsv ]; then
 
             rm -rf read_query_tr_map.tsv salmon_index* salmon_out* transcriptome.fa
@@ -295,7 +297,6 @@ process salmon {
     fi
     """
 }
-
 
 process assign_transcripts {
     label "singlecell"
