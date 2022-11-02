@@ -43,7 +43,7 @@ process summarize_adapter_table {
     output:
         tuple val(sample_id), path('*config_stats.json'), emit: config_stats
     """
-    #!/usr/bin/env python
+    #!/usr/bin/python3
     import pandas as pd
     import json
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 """Calculate saturation."""
 import argparse
 import logging

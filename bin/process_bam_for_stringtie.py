@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 """Preprocess bam ready for transcript assemble with stringtie.
 
 Toggle the 16/0 bam bit to effectively invert the alignment.

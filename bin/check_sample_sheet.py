@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 """Script to check that sample sheet is well-formatted."""
 import argparse
 import sys

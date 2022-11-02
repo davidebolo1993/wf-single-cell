@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 """Cluster UMIs."""
 # This code makes significant use of the UMI-tools package (MIT license).
 #

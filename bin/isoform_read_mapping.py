@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 """Build a TSV of read_id, query_transcript, ref_transcript gene."""
 import argparse
 

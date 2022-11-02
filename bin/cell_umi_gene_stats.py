@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 """Cell Umi gene stats."""
 import argparse
 import logging
