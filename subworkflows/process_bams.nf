@@ -265,7 +265,7 @@ process salmon {
     echo "procesing ${sample_id}, ${chr} with salmon"
 
     # If less than 5 transcripts can be built, return empty file - switched to 10 for testing now back to 5
-    if [ \$(wc -l <stringtie.gff) -lt 5 ]; then
+    if [ \$(wc -l <stringtie.gff) -lt 10 ]; then
 
         touch empty_read_query_tr_map.tsv
     
